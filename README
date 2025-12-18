@@ -1,0 +1,27 @@
+This is a SQLite extension that provides a few file management SQL functions:
+
+	FILE_MKDIR(PATHNAME)
+	FILE_TO_FILE(SOURCEPATHNAME, DESTINATIONPATHNAME)
+	
+	BLOB_CRC32(BLOBCONTENT)
+	FILE_CRC32(PATHNAME)
+	
+	FILE_DATE_MODIFIED(PATHNAME)
+	FILE_SIZE(PATHNAME)
+	FILE_EXISTS(PATHNAME)
+	
+	FILE_EXTENSION(PATHNAME)
+	FILE_FILENAME(PATHNAME)
+	FILE_BASENAME(PATHNAME)
+	FILE_UPDIR(PATHNAME)
+
+See test/test002-basic.sql and test/test003-write.sql for a few usage examples.
+
+### How to compile
+
+	make all
+
+### How to run the test suite
+
+After the extension and the test program have been compiled with "make all", type "make check".
+The test suite has been confirmed to pass on MinGW64 in Windows.

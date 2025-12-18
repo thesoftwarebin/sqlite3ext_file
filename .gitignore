@@ -1,0 +1,10 @@
+src/.deps/
+src/.libs/
+src/*.o
+src/*.lo
+src/*.la
+test/testbig.bin
+test/testdir*
+test/test*.trs
+test/test*.sh.log
+test-suite.log
