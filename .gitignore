@@ -1,0 +1,17 @@
+src/.deps/
+src/.libs/
+src/*.o
+src/*.lo
+src/*.la
+src/Makefile
+test/inputdata/testbig.bin
+test/output/
+test/test*.sh.trs
+test/test*.sh.log
+test-suite.log
+sqlite3ext_file-*.tar.gz
+Makefile
+config.h
+config.log
+config.status
+stamp-h1
