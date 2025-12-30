@@ -17,6 +17,13 @@ This is a SQLite extension that provides a few file management SQL functions:
 	SELECT FILE_TO_FILE(SOURCEPATHNAME, DESTINATIONPATHNAME);   -- returns either "OK" or a string starting with "error"
 ```
 
+All these functions except `BLOB_CRC32` are capable of handling files ≥1GB. Although no extensive tests have been conducted about the maximum file size, there functions have been tested on a 5+GB file:
+
+- `FILE_EXISTS`
+- `FILE_SIXE`
+- `FILE_CRC32`
+- `FILE_TO_FILE`
+
 See [test/test002-basic.sql](test/test002-basic.sql) and [test/test003-write.sql](test/test003-write.sql) for a few more usage examples.
 
 ### How to compile
@@ -35,7 +42,7 @@ See [test/test002-basic.sql](test/test002-basic.sql) and [test/test003-write.sql
 	make check
 ```
 
-The test suite has been confirmed to pass on MinGW64 in Windows, with this setup:
+The tests have been confirmed to pass on MinGW64 in Windows, with this setup:
 
 ```
 	# OS is: Microsoft Windows 11 Home 10.0.26200 build 26200
@@ -56,3 +63,7 @@ The test suite has been confirmed to pass on MinGW64 in Windows, with this setup
 	GNU Make 4.4.1
 	Built for x86_64-pc-msys
 ```
+
+At the time of writing (Dec'2025) no tests have been conducted on
+Linux or other Unix-like OSes, but the source code is supposed to
+compile and run there with no or minimal adjustments.
