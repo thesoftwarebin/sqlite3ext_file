@@ -34,12 +34,16 @@ extern const sqlite3_api_routines *sqlite3_api;
 
 void libsqlitefile_file_to_file(sqlite3_context * context, int argc,
 		sqlite3_value ** argv) {
-	char *file_name_src = (char *) sqlite3_value_text(argv[0]);
-	char *file_name_dst = (char *) sqlite3_value_text(argv[1]);
+	char file_name_src[PATHNAME_MAX_LENGTH+1];
+	char file_name_dst[PATHNAME_MAX_LENGTH+1];
+	strcpy(file_name_src, (char *) sqlite3_value_text(argv[0]));
+	strcpy(file_name_dst, (char *) sqlite3_value_text(argv[1]));
 
 #ifdef HAVE_SUPPORT_FOR_WIN32_UTF8_PATHNAMES
-	wchar_t *wfile_name_src = (wchar_t*) sqlite3_value_text16(argv[0]);
-	wchar_t *wfile_name_dst = (wchar_t*) sqlite3_value_text16(argv[1]);
+	wchar_t wfile_name_src[PATHNAME_MAX_LENGTH+1];
+	wchar_t wfile_name_dst[PATHNAME_MAX_LENGTH+1];
+	wcscpy(wfile_name_src, (wchar_t*) sqlite3_value_text16(argv[0]));
+	wcscpy(wfile_name_dst, (wchar_t*) sqlite3_value_text16(argv[1]));
 	const int src_equals_dst = (_wcsicmp(wfile_name_src, wfile_name_dst)==0);
 #else
 	const int src_equals_dst = (stricmp(file_name_src, file_name_dst)==0);
