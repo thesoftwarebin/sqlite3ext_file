@@ -1,10 +1,22 @@
-if [ ! -f test/test003-write.sql ] ; then exit 1 ; fi
+# -*- coding: utf-8 -*-
 
-rm -vrf test/output/testdir test/output/testdir-città
+if [ ! -f "${srcdir}/test/test003-write.sql" ] ; then exit 99 ; fi
 
-mkdir -p test/output
+idir="${srcdir}/test/inputdata"
+odir="./test/test003-output"
 
-if (sqlite3.exe :memory: ".read test/test003-write.sql" ".quit" | grep FAILED) ; then
+olog="${odir}/test003-write.sql.log"
+
+rm -vrf "${odir}"
+
+mkdir -p "${odir}"
+mkdir -p "${odir}/file_to_file_existing_dir"
+
+sqlite3.exe :memory: ".load \"./src/.libs/sqlite3ext_file-1.dll\"" ".param init" ".param set @idir \"${idir}\"" ".param set @odir \"${odir}\"" ".read \"${srcdir}/test/test003-write.sql\"" > "${olog}"
+
+cat "${olog}"
+
+if grep -q FAILED "${odir}/test003-write.sql.log" ; then
 	# exit with failure if at least one test has FAILED
 	exit 1
 else

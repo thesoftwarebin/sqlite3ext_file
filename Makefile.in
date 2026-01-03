@@ -89,10 +89,6 @@ PRE_UNINSTALL = :
 POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
-@HAVESQLITE3SHELLFORTESTS_TRUE@TESTS = test/test001-sqlite3.sh \
-@HAVESQLITE3SHELLFORTESTS_TRUE@	test/test002-basic.sh \
-@HAVESQLITE3SHELLFORTESTS_TRUE@	test/test003-write.sh \
-@HAVESQLITE3SHELLFORTESTS_TRUE@	$(am__EXEEXT_1)
 subdir = .
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/configure.ac
@@ -349,7 +345,6 @@ am__set_TESTS_bases = \
   bases=`echo $$bases`
 AM_TESTSUITE_SUMMARY_HEADER = ' for $(PACKAGE_STRING)'
 RECHECK_LOGS = $(TEST_LOGS)
-@HAVEBIGFILETESTS_TRUE@@HAVESQLITE3SHELLFORTESTS_TRUE@am__EXEEXT_1 = test/test004-bigfile.sh
 TEST_SUITE_LOG = test-suite.log
 TEST_EXTENSIONS = @EXEEXT@ .test
 LOG_DRIVER = $(SHELL) $(top_srcdir)/test-driver
@@ -545,8 +540,6 @@ top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 SUBDIRS = src 
-@HAVEBIGFILETESTS_FALSE@@HAVESQLITE3SHELLFORTESTS_TRUE@BIGTESTS = 
-@HAVEBIGFILETESTS_TRUE@@HAVESQLITE3SHELLFORTESTS_TRUE@BIGTESTS = test/test004-bigfile.sh
 @HAVESQLITE3SHELLFORTESTS_TRUE@EXTRA_DIST = \
 @HAVESQLITE3SHELLFORTESTS_TRUE@	test/test001-sqlite3.sh                          \
 @HAVESQLITE3SHELLFORTESTS_TRUE@	test/test002-basic.sh test/test002-basic.sql     \
@@ -556,6 +549,11 @@ SUBDIRS = src
 @HAVESQLITE3SHELLFORTESTS_TRUE@	test/inputdata/test-citta.png                    \
 @HAVESQLITE3SHELLFORTESTS_TRUE@	test/inputdata/test-città.png                    \
 @HAVESQLITE3SHELLFORTESTS_TRUE@	.gitignore
+
+@HAVESQLITE3SHELLFORTESTS_TRUE@TESTS = test/test001-sqlite3.sh test/test002-basic.sh test/test003-write.sh test/test004-bigfile.sh
+@HAVEBIGFILETESTS_TRUE@@HAVESQLITE3SHELLFORTESTS_TRUE@AM_TESTS_ENVIRONMENT = \
+@HAVEBIGFILETESTS_TRUE@@HAVESQLITE3SHELLFORTESTS_TRUE@	export havebigtestfiles=true \
+@HAVEBIGFILETESTS_TRUE@@HAVESQLITE3SHELLFORTESTS_TRUE@	;
 
 CLEANFILES = test/inputdata/testbig.bin
 all: config.h
@@ -1272,7 +1270,7 @@ uninstall-am:
 
 
 clean-local:
-	-rm -rf test/output
+	-rm -vrf test/test002-output test/test003-output test/test004-output
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.

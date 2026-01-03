@@ -2,12 +2,6 @@ SUBDIRS = src
 
 if HAVESQLITE3SHELLFORTESTS
 
-if HAVEBIGFILETESTS
-BIGTESTS = test/test004-bigfile.sh
-else
-BIGTESTS =
-endif
-
 EXTRA_DIST = \
 	test/test001-sqlite3.sh                          \
 	test/test002-basic.sh test/test002-basic.sql     \
@@ -18,11 +12,17 @@ EXTRA_DIST = \
 	test/inputdata/test-città.png                    \
 	.gitignore
 
-TESTS = test/test001-sqlite3.sh test/test002-basic.sh test/test003-write.sh $(BIGTESTS)
+TESTS = test/test001-sqlite3.sh test/test002-basic.sh test/test003-write.sh test/test004-bigfile.sh
+
+if HAVEBIGFILETESTS
+AM_TESTS_ENVIRONMENT = \
+	export havebigtestfiles=true \
+	;
+endif
 
 endif
 
 CLEANFILES = test/inputdata/testbig.bin
 
 clean-local:
-	-rm -rf test/output
+	-rm -vrf test/test002-output test/test003-output test/test004-output

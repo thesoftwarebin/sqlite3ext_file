@@ -5,7 +5,8 @@ src/*.lo
 src/*.la
 src/Makefile
 test/inputdata/testbig.bin
-test/output/
+test/test003-output/
+test/test004-output/
 test/test*.sh.trs
 test/test*.sh.log
 test-suite.log
