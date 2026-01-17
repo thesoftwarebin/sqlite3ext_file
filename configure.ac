@@ -2,8 +2,9 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ([2.68])
-AC_INIT([sqlite3ext_file], [1.0], [andrear1979@hotmail.com])
+AC_INIT([sqlite3ext_file], [1.0.2], [andrear1979@hotmail.com])
 AC_CONFIG_SRCDIR([config.h.in])
+AC_CONFIG_MACRO_DIR([m4])
 AC_CONFIG_HEADERS([config.h])
 AM_INIT_AUTOMAKE
 LT_INIT([shared win32-dll])
@@ -23,6 +24,8 @@ AC_CHECK_HEADER([stdio.h],  [], [AC_MSG_ERROR([stdio.h is a mandatory requiremen
 AC_CHECK_HEADER([string.h], [], [AC_MSG_ERROR([string.h is a mandatory requirement to build this package])])
 AC_CHECK_HEADER([utime.h],  [], [AC_MSG_ERROR([utime.h is a mandatory requirement to build this package])])
 
+AC_CHECK_HEADERS([direct.h])
+
 AC_CHECK_DECL(
 	[_wfopen], 
 	[
@@ -31,6 +34,8 @@ AC_CHECK_DECL(
 		AC_MSG_NOTICE([see symbol HAVE_SUPPORT_FOR_WIN32_UTF8_PATHNAMES in config.h])
 	]
 )
+
+AX_FUNC_MKDIR
 
 # Checks for libraries.
 AC_CHECK_LIB([sqlite3], [sqlite3_value_text], [], [AC_MSG_ERROR([SQLite library is a mandatory requirement.])])

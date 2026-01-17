@@ -1,5 +1,8 @@
 /* config.h.in.  Generated from configure.ac by autoheader.  */
 
+/* Define to 1 if you have the <direct.h> header file. */
+#undef HAVE_DIRECT_H
+
 /* Define to 1 if you have the <dlfcn.h> header file. */
 #undef HAVE_DLFCN_H
 
@@ -8,6 +11,9 @@
 
 /* Define to 1 if you have the 'sqlite3' library (-lsqlite3). */
 #undef HAVE_LIBSQLITE3
+
+/* Define to 1 if you have the 'mkdir' function. */
+#undef HAVE_MKDIR
 
 /* Define to 1 if you have the <stdint.h> header file. */
 #undef HAVE_STDINT_H
@@ -37,8 +43,14 @@
 /* Define to 1 if you have the <unistd.h> header file. */
 #undef HAVE_UNISTD_H
 
+/* Define to 1 if you have the '_mkdir' function. */
+#undef HAVE__MKDIR
+
 /* Define to the sub-directory where libtool stores uninstalled libraries. */
 #undef LT_OBJDIR
+
+/* Define if mkdir takes only one argument. */
+#undef MKDIR_TAKES_ONE_ARG
 
 /* Name of package */
 #undef PACKAGE

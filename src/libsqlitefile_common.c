@@ -23,8 +23,11 @@
 #include <sys/stat.h>
 #include <string.h>
 #include <errno.h>
-#include <io.h>
+
+#if HAVE_DIRECT_H
 #include <direct.h>
+#endif
+
 #include <fcntl.h>
 #include <stdio.h>
 #include <unistd.h>
@@ -33,6 +36,8 @@
 #ifdef HAVE_SUPPORT_FOR_WIN32_UTF8_PATHNAMES
 	#include "fopen_utf8.h"
 #endif
+
+#include "libsqlitefile_compat_mkdir.h"
 
 int up_dir(const char* path, char* dir_buffer){
 	char* p1=strrchr(path, PATHNAME_SEPARATOR);
@@ -44,20 +49,17 @@ int up_dir(const char* path, char* dir_buffer){
 		return 0;
 	}
 }
-
-int file_stats(const char* filename){
-	struct stat64 s;
-	memset(&s, 0, sizeof(struct stat64));
-
-#ifdef HAVE_SUPPORT_FOR_WIN32_UTF8_PATHNAMES
-	wchar_t wfilename[PATHNAME_MAX_LENGTH+1];
-	utf8_to_utf16(filename, wfilename);
-	int result=wstat64(wfilename, &s);
+ int file_stats(const char* filename){
+       struct stat s;
+       memset(&s, 0, sizeof(struct stat));
+ #ifdef HAVE_SUPPORT_FOR_WIN32_UTF8_PATHNAMES
+       wchar_t wfilename[PATHNAME_MAX_LENGTH+1];
+       utf8_to_utf16(filename, wfilename);
+       int result=wstat(wfilename, &s);
 #else
-	int result=stat64(filename, &s);
+       int result=stat(filename, &s);
 #endif
-	
-	if (result==-1){
+        if (result==-1){
 		if (errno==ENOENT){
 			return 0;
 		} else {
@@ -128,7 +130,7 @@ int libsqlitefile_mkdir_with_file(const char* path, const int is_path_of_a_file)
 					utf8_to_utf16(path, wpath);
 					const int mkdir_result = _wmkdir(wpath);
 				#else
-					const int mkdir_result = mkdir(path);
+					const int mkdir_result = mkdir(path, 0);
 				#endif
 
 				if (mkdir_result==0){

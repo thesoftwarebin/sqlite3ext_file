@@ -4,7 +4,7 @@
 .headers off
 .nullvalue 'NULL'
 
-.mode box
+.mode table
 
 .width 64 32 24
 
@@ -41,5 +41,5 @@ from (
 	union all
 	select 'file_crc32(@idir||''/test-città.png'')' as testname,                  '9D14BE41' as expected,            file_crc32(@idir||'/test-città.png') as observed
 	union all
-	select 'file_date_modified(@idir||''/test-città.png'')' as testname,          '2025-11-26 23:55:38' as expected, file_date_modified(@idir||'/test-città.png') as observed
+	select 'file_date_modified(@idir||''/test-modified-date.png'')' as testname,  '2025-11-26 23:55:38' as expected, file_date_modified(@idir||'/test-modified-date.png') as observed
 );

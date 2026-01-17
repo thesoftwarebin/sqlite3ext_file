@@ -4,7 +4,7 @@
 .headers off
 .nullvalue 'NULL'
 
-.mode box
+.mode table
 
 .width 36 32 32
 

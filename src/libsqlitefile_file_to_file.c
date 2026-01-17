@@ -30,6 +30,11 @@
 	#include "fopen_utf8.h"
 #endif
 
+// Linux compilers have no O_BINARY flag
+#ifndef O_BINARY
+	#define O_BINARY 0
+#endif
+
 extern const sqlite3_api_routines *sqlite3_api;
 
 void libsqlitefile_file_to_file(sqlite3_context * context, int argc,
@@ -46,7 +51,7 @@ void libsqlitefile_file_to_file(sqlite3_context * context, int argc,
 	wcscpy(wfile_name_dst, (wchar_t*) sqlite3_value_text16(argv[1]));
 	const int src_equals_dst = (_wcsicmp(wfile_name_src, wfile_name_dst)==0);
 #else
-	const int src_equals_dst = (stricmp(file_name_src, file_name_dst)==0);
+       const int src_equals_dst = (strcasecmp(file_name_src, file_name_dst)==0);
 #endif
 
 	int fd_src;

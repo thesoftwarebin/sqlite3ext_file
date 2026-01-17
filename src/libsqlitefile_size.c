@@ -30,6 +30,8 @@
 	#include "fopen_utf8.h"
 #endif
 
+#include <stdint.h>
+
 int64_t file_size(const char* path);
 
 int64_t file_size(const char* path){
@@ -37,11 +39,11 @@ int64_t file_size(const char* path){
 #ifdef HAVE_SUPPORT_FOR_WIN32_UTF8_PATHNAMES
 	wchar_t wpath[PATHNAME_MAX_LENGTH+1];
 	utf8_to_utf16(path, wpath);
-	struct stat64 b;
-	const auto stat_result = wstat64(wpath, &b);
+	struct stat b;
+	const int stat_result = wstat(wpath, &b);
 #else
 	struct stat b;
-	const auto stat_result = stat(path, &b);
+	const int stat_result = stat(path, &b);
 #endif
 
 	if (!stat_result) {

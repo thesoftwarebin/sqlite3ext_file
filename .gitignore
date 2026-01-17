@@ -5,6 +5,7 @@ src/*.lo
 src/*.la
 src/Makefile
 test/inputdata/testbig.bin
+test/test002-output/
 test/test003-output/
 test/test004-output/
 test/test*.sh.trs
@@ -16,3 +17,5 @@ config.h
 config.log
 config.status
 stamp-h1
+configure~
+config.h.in~

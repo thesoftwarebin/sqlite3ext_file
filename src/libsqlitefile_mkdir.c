@@ -21,7 +21,6 @@
 #include <sys/stat.h>
 #include <string.h>
 #include <errno.h>
-#include <io.h>
 #include <sqlite3ext.h>
 
 extern const sqlite3_api_routines *sqlite3_api;
