@@ -30,10 +30,10 @@
 
 /* functions used only in this module */
 void sqlite_date_string_from_file(const char* path, char* destination_buffer, const int destination_buffer_length);
-void unix_timestamp_to_sqlite_date_string(const __time64_t unixTimestamp, char* destination_buffer, const int destination_buffer_length);
+void unix_timestamp_to_sqlite_date_string(const time_t unixTimestamp, char* destination_buffer, const int destination_buffer_length);
 
-void unix_timestamp_to_sqlite_date_string(const __time64_t unixTimestamp, char* destination_buffer, const int destination_buffer_length){
-	struct tm * ptm = _localtime64(&unixTimestamp);
+void unix_timestamp_to_sqlite_date_string(const time_t unixTimestamp, char* destination_buffer, const int destination_buffer_length){
+	struct tm * ptm = localtime(&unixTimestamp);
 	if (ptm!=NULL){
 		if (strftime (destination_buffer, destination_buffer_length, "%Y-%m-%d %H:%M:%S", ptm) != 0){
 			return;
@@ -48,14 +48,17 @@ void unix_timestamp_to_sqlite_date_string(const __time64_t unixTimestamp, char* 
 }
 
 void sqlite_date_string_from_file(const char* path, char* destination_buffer, const int destination_buffer_length){
-	struct stat64 b;
+
+	struct stat b;
+
 	#ifdef HAVE_SUPPORT_FOR_WIN32_UTF8_PATHNAMES
 		wchar_t wpath[PATHNAME_MAX_LENGTH+1];
 		utf8_to_utf16(path, wpath);
-		const int stat_result = wstat64(wpath, &b);
+		const int stat_result = wstat(wpath, &b);
 	#else
-		const int stat_result = stat64(path, &b);
+		const int stat_result = stat(path, &b);
 	#endif
+
 	if (!stat_result) {
 		unix_timestamp_to_sqlite_date_string(b.st_mtime, destination_buffer, destination_buffer_length);
 		return;

@@ -2,6 +2,15 @@
 
 if [ ! -f "${srcdir}/test/test003-write.sql" ] ; then exit 99 ; fi
 
+if [ -f "./src/.libs/sqlite3ext_file-1.dll" ] ; then
+	libtotest="./src/.libs/sqlite3ext_file-1.dll"
+elif [ -f "./src/.libs/sqlite3ext_file.so.1" ] ; then
+	libtotest="./src/.libs/sqlite3ext_file.so.1"
+else
+	echo "error: cannot find the binary library to test (so or .dll file)"
+	exit 99
+fi
+
 idir="${srcdir}/test/inputdata"
 odir="./test/test003-output"
 
@@ -12,7 +21,7 @@ rm -vrf "${odir}"
 mkdir -p "${odir}"
 mkdir -p "${odir}/file_to_file_existing_dir"
 
-sqlite3.exe :memory: ".load \"./src/.libs/sqlite3ext_file-1.dll\"" ".param init" ".param set @idir \"${idir}\"" ".param set @odir \"${odir}\"" ".read \"${srcdir}/test/test003-write.sql\"" > "${olog}"
+sqlite3 :memory: ".load \"${libtotest}\"" ".param init" ".param set @idir \"${idir}\"" ".param set @odir \"${odir}\"" ".read \"${srcdir}/test/test003-write.sql\"" > "${olog}"
 
 cat "${olog}"
 

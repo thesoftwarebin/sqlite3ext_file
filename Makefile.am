@@ -10,6 +10,7 @@ EXTRA_DIST = \
 	test/inputdata/20231030_150218.jpg               \
 	test/inputdata/test-citta.png                    \
 	test/inputdata/test-città.png                    \
+	test/inputdata/test-modified-date.png            \
 	.gitignore
 
 TESTS = test/test001-sqlite3.sh test/test002-basic.sh test/test003-write.sh test/test004-bigfile.sh
